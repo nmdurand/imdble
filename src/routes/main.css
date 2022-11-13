@@ -1,0 +1,13 @@
+
+body {
+  background: black;
+  color: white;
+  font-family: sans-serif;
+
+  --imdb-gold: #f5c519;
+  --imdb-grey: #1a1a1a;
+}
+
+.hidden {
+  display: none;
+}
