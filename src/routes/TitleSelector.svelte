@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Title from './Title.svelte';
+	import Title from './TitleOption.svelte';
 
 	export let disabled: boolean = false;
 	export let titles: string[];
