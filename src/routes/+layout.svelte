@@ -1,6 +1,9 @@
 <script>
 	import './main.css';
 	import { gameState } from './stores';
+	import RulesModal from '$lib/components/modal/RulesModal.svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import arrowRotate from '$lib/icons/arrow-rotate.svg';
 
 	const loadNewQuestion = async () => {
 		const res = await fetch('api/question', {
@@ -21,7 +24,8 @@
 <div class="container">
 	<div class="header">
 		<h1 class="title">IMDble</h1>
-		<button on:click={loadNewQuestion}>NEW GAME</button>
+		<RulesModal />
+		<Icon src={arrowRotate} alt="Rotate icon" onClick={loadNewQuestion} />
 	</div>
 	<hr />
 	<slot />
@@ -40,13 +44,14 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
 	}
 	.title {
+		justify-self: start;
 		background-color: var(--imdb-gold);
 		color: black;
 		border-radius: 0.25em;
 		margin: 0;
+		margin-right: auto;
 		padding: 0.2em 0.5em;
 		user-select: none;
 	}

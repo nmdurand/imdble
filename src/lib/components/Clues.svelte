@@ -16,7 +16,7 @@
 	];
 </script>
 
-<div class="clues-section">
+<div class="section section-block">
 	<div class="section-title">Clues</div>
 	<div class="clues">
 		{#each clues as clue, i}
@@ -31,19 +31,6 @@
 </div>
 
 <style>
-	.clues-section {
-		display: flex;
-		flex-direction: column;
-		background-color: var(--imdb-grey);
-		border-radius: 0.25em;
-		padding: 1em 0.75em;
-		margin-bottom: 1em;
-	}
-	.section-title {
-		font-size: 1.5em;
-		font-weight: bold;
-		margin-bottom: 0.25em;
-	}
 	.clues {
 		width: 100%;
 		display: flex;

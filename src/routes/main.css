@@ -6,8 +6,25 @@ body {
 
   --imdb-gold: #f5c519;
   --imdb-grey: #1a1a1a;
+  --imdb-light-grey: #313131;
 }
 
 .hidden {
   display: none;
+}
+
+.section {
+  user-select: none;
+  margin-bottom: 1em;
+}
+.section-block {
+  padding: 1em 0.75em;
+  background-color: var(--imdb-grey);
+  border: 1px solid var(--imdb-light-grey);
+  border-radius: 0.25em;
+}
+.section-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 0.25em;
 }

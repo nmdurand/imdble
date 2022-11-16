@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { gameState } from './stores';
 	import type { PageData } from './$types';
+	import Plot from '$lib/components/Plot.svelte';
 	import Clues from '$lib/components/Clues.svelte';
 	import Answers from '$lib/components/Answers.svelte';
 	import TitleSelector from '$lib/components/TitleSelector.svelte';
+	import Modal from '$lib/components/modal/Modal.svelte';
 
 	export let data: PageData;
 	let titleSelector: TitleSelector;
@@ -46,7 +48,7 @@
 	};
 </script>
 
-<div class="plot">{$gameState.question.plot ? $gameState.question.plot : 'Loading...'}</div>
+<Plot plot={$gameState.question.plot} />
 
 <Clues question={$gameState.question} currentGuessIndex={$gameState.currentGuessIndex} />
 
@@ -62,13 +64,7 @@
 	disabled={$gameState.status !== 'IN_PROGRESS'}
 />
 
-<style>
-	.plot {
-		font-size: 1.2em;
-		margin-bottom: 1em;
-		padding: 1em 0.75em;
-		background-color: var(--imdb-grey);
-		border-radius: 0.25em;
-		user-select: none;
-	}
-</style>
+<Modal
+	title={$gameState.status}
+	shown={$gameState.status === 'SUCCESS' || $gameState.status === 'FAILURE'}
+/>
