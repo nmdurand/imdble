@@ -1,4 +1,4 @@
-import { getRandomMovie } from "$lib/dbUtils";
+import { getRandomMovie } from "$lib/repository";
 import type { RequestHandler } from "@sveltejs/kit";
 
 

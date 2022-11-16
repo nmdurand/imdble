@@ -8,11 +8,6 @@
 	export let data: PageData;
 	let titleSelector: TitleSelector;
 
-	$: {
-		$gameState.question = data.question;
-		$gameState.status = 'IN_PROGRESS';
-	}
-
 	const isValidAnswer = (answer: string) => {
 		return data.titles.some((title) => title.toLowerCase() === answer.toLowerCase());
 	};
@@ -45,16 +40,15 @@
 			if ($gameState.currentGuessIndex === $gameState.guesses.length) {
 				$gameState.status = 'FAILURE';
 			}
-			console.log('Game state:', $gameState);
 		} else {
 			throw new Error('Something went wrong');
 		}
 	};
 </script>
 
-<div class="plot">{data.question.plot}</div>
+<div class="plot">{$gameState.question.plot ? $gameState.question.plot : 'Loading...'}</div>
 
-<Clues {data} />
+<Clues />
 
 <div class="answers">
 	{#each $gameState.guesses as guess}

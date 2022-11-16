@@ -1,6 +1,5 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
-import { PrismaClient, type Movie } from '@prisma/client'
 
 const IMDB_TOP1000_PATH = 'https://www.imdb.com/search/title/?title_type=feature&groups=top_1000'
 
@@ -16,7 +15,7 @@ interface movieDetails {
   actor: string
 }
 
-const scrapeMovieData = async () => {
+export const scrapeMovieData = async () => {
   console.log('Scraping movie data.')
   try {
     const data: movieDetails[] = []
@@ -56,61 +55,4 @@ const scrapeMovieData = async () => {
     console.error('Error scraping movie data:', err)
     throw err
   }
-}
-
-export const updateMovieData = async () => {
-  console.log('Updating movie data.')
-  try {
-    const prisma = new PrismaClient()
-    const data = await scrapeMovieData()
-    if (data !== undefined) {
-      for (const movie of data) {
-        const { title, imdb_id, plot, year, director, actor } = movie
-        await prisma.movie.create({
-          data: { title, imdb_id, plot, year, director, actor, }
-        })
-      }
-    } else {
-      throw new Error('No data returned from scrapeMovieData.')
-    }
-    await prisma.$disconnect()
-  } catch (err) {
-    console.error('Error updating movie data:', err)
-    throw err
-  }
-}
-
-export const getRandomMovie = async (): Promise<Movie> => {
-  const prisma = new PrismaClient()
-  const result: Movie[] = await prisma.$queryRawUnsafe(
-    `SELECT * FROM "Movie" ORDER BY RANDOM() LIMIT 1;`,
-  )
-  if (result.length === 0) {
-    await updateMovieData()
-    await prisma.$disconnect()
-    return getRandomMovie()
-  }
-  await prisma.$disconnect()
-  return result[0]
-}
-
-export const getMovieData = async (imdb_id: string): Promise<Movie | null> => {
-  const prisma = new PrismaClient()
-  if (imdb_id === undefined) {
-    return null
-  }
-  const result: Movie | null = await prisma.movie.findUnique({
-    where: {
-      imdb_id,
-    },
-  })
-  await prisma.$disconnect()
-  return result
-}
-
-export const getMovieDataList = async (): Promise<Movie[]> => {
-  const prisma = new PrismaClient()
-  const result: Movie[] = await prisma.movie.findMany()
-  await prisma.$disconnect()
-  return result
 }

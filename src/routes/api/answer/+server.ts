@@ -1,5 +1,5 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import { getMovieData } from "$lib/dbUtils";
+import { getMovieData } from "$lib/repository";
 
 
 export const POST: RequestHandler = async ({ request }) => {

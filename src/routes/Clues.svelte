@@ -1,13 +1,8 @@
 <script lang="ts">
 	import { gameState } from './stores';
-	import type { PageData } from '../../.svelte-kit/types/src/routes/$types';
-
-	export let data: PageData;
-
-	type dataProps = keyof typeof data.question;
 
 	type Clue = {
-		prop: dataProps;
+		prop: 'year' | 'director' | 'actor';
 		label: string;
 	};
 
@@ -25,7 +20,7 @@
 			<div class={`clue${$gameState.currentGuessIndex > i ? ' found' : ''}`}>
 				<div class="clue-label">{clue.label}</div>
 				<div class="clue-value">
-					{$gameState.currentGuessIndex > i ? data.question[clue.prop] : '????'}
+					{$gameState.currentGuessIndex > i ? $gameState.question[clue.prop] : '????'}
 				</div>
 			</div>
 		{/each}
