@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { gameState } from '../stores';
+	import { gameState } from './stores';
 	import type { PageData } from './$types';
 	import Clues from '$lib/components/Clues.svelte';
 	import Answers from '$lib/components/Answers.svelte';

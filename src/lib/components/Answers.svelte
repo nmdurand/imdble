@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { GameGuess } from '../../stores';
+	import type { GameGuess } from '../../routes/stores';
 
 	export let guesses: (GameGuess | undefined)[];
 </script>
@@ -7,7 +7,9 @@
 <div class="answers">
 	{#each guesses as guess}
 		{#if guess}
-			<div class={`answer-slot ${guess.isCorrect ? 'correct' : 'incorrect'}`}>{guess.answer}</div>
+			<div class="answer-slot" style:background-color={guess.isCorrect ? '#0e390e' : '#3e0c0c'}>
+				{guess.answer}
+			</div>
 		{:else}
 			<div class="answer-slot" />
 		{/if}
@@ -30,11 +32,5 @@
 		box-sizing: border-box;
 		background-color: var(--imdb-grey);
 		color: white;
-	}
-	.correct {
-		background-color: #0e390e;
-	}
-	.incorrect {
-		background-color: #3e0c0c;
 	}
 </style>

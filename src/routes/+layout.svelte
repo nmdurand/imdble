@@ -1,6 +1,6 @@
 <script>
 	import './main.css';
-	import { gameState } from '../stores';
+	import { gameState } from './stores';
 
 	const loadNewQuestion = async () => {
 		const res = await fetch('api/question', {

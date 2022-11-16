@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Question } from '../../stores';
+	import type { Question } from '../../routes/stores';
 
 	export let question: Question;
 	export let currentGuessIndex: number;
@@ -20,7 +20,7 @@
 	<div class="section-title">Clues</div>
 	<div class="clues">
 		{#each clues as clue, i}
-			<div class={`clue${currentGuessIndex > i ? ' found' : ''}`}>
+			<div class="clue" class:found={currentGuessIndex > i}>
 				<div class="clue-label">{clue.label}</div>
 				<div class="clue-value">
 					{currentGuessIndex > i ? question[clue.prop] : '????'}
