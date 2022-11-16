@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { gameState } from './stores';
-	import type { PageData } from '../../.svelte-kit/types/src/routes/$types';
-	import Clues from './Clues.svelte';
-	import AnswerSlot from './AnswerSlot.svelte';
-	import TitleSelector from './TitleSelector.svelte';
+	import { gameState } from '../stores';
+	import type { PageData } from './$types';
+	import Clues from '$lib/components/Clues.svelte';
+	import Answers from '$lib/components/Answers.svelte';
+	import TitleSelector from '$lib/components/TitleSelector.svelte';
 
 	export let data: PageData;
 	let titleSelector: TitleSelector;
@@ -17,7 +17,7 @@
 			alert('Invalid answer');
 			return;
 		}
-		const res = await fetch('api/answer', {
+		const res = await fetch('api/validate-answer', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -48,13 +48,9 @@
 
 <div class="plot">{$gameState.question.plot ? $gameState.question.plot : 'Loading...'}</div>
 
-<Clues />
+<Clues question={$gameState.question} currentGuessIndex={$gameState.currentGuessIndex} />
 
-<div class="answers">
-	{#each $gameState.guesses as guess}
-		<AnswerSlot {guess} />
-	{/each}
-</div>
+<Answers guesses={$gameState.guesses} />
 
 <TitleSelector
 	titles={data.titles}
@@ -74,9 +70,5 @@
 		background-color: var(--imdb-grey);
 		border-radius: 0.25em;
 		user-select: none;
-	}
-	.answers {
-		width: 100%;
-		margin-bottom: 1em;
 	}
 </style>

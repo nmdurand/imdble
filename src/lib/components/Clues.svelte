@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { gameState } from './stores';
+	import type { Question } from '../../stores';
+
+	export let question: Question;
+	export let currentGuessIndex: number;
 
 	type Clue = {
 		prop: 'year' | 'director' | 'actor';
@@ -17,10 +20,10 @@
 	<div class="section-title">Clues</div>
 	<div class="clues">
 		{#each clues as clue, i}
-			<div class={`clue${$gameState.currentGuessIndex > i ? ' found' : ''}`}>
+			<div class={`clue${currentGuessIndex > i ? ' found' : ''}`}>
 				<div class="clue-label">{clue.label}</div>
 				<div class="clue-value">
-					{$gameState.currentGuessIndex > i ? $gameState.question[clue.prop] : '????'}
+					{currentGuessIndex > i ? question[clue.prop] : '????'}
 				</div>
 			</div>
 		{/each}

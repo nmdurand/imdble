@@ -1,16 +1,24 @@
 <script lang="ts">
-	import type { GameGuess } from './stores';
+	import type { GameGuess } from '../../stores';
 
-	export let guess: GameGuess | undefined;
+	export let guesses: (GameGuess | undefined)[];
 </script>
 
-{#if guess}
-	<div class={`answer-slot ${guess.isCorrect ? 'correct' : 'incorrect'}`}>{guess.answer}</div>
-{:else}
-	<div class="answer-slot" />
-{/if}
+<div class="answers">
+	{#each guesses as guess}
+		{#if guess}
+			<div class={`answer-slot ${guess.isCorrect ? 'correct' : 'incorrect'}`}>{guess.answer}</div>
+		{:else}
+			<div class="answer-slot" />
+		{/if}
+	{/each}
+</div>
 
 <style>
+	.answers {
+		width: 100%;
+		margin-bottom: 1em;
+	}
 	.answer-slot {
 		width: 100%;
 		height: 2em;
