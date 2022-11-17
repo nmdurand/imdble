@@ -9,7 +9,7 @@ export interface Question {
   actor: string;
 }
 
-type GameStatus = "IDLE" | "IN_PROGRESS" | "SUCCESS" | "FAILURE";
+export type GameStatus = "IDLE" | "IN_PROGRESS" | "WIN" | "FAIL";
 
 export interface GameGuess {
   answer: string;
@@ -21,6 +21,7 @@ interface GameState {
   guesses: (GameGuess | undefined)[]
   currentGuessIndex: number
   status: GameStatus
+  answer: string | undefined
 }
 
 interface GameStateStore extends Writable<GameState> {
@@ -45,6 +46,7 @@ const INITIAL_STATE: GameState = {
   guesses: [undefined, undefined, undefined, undefined,],
   currentGuessIndex: 0,
   status: "IDLE",
+  answer: undefined,
 }
 
 const createGameStateStore = (): GameStateStore => {
@@ -63,6 +65,7 @@ const createGameStateStore = (): GameStateStore => {
         guesses: [undefined, undefined, undefined, undefined,],
         currentGuessIndex: 0,
         status: "IN_PROGRESS",
+        answer: undefined,
       }
     })
   }

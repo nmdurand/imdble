@@ -18,11 +18,11 @@
 	<div
 		class="modal-backdrop"
 		class:shown
-		on:click={closeModal}
-		on:keydown={() => {}}
+		on:click|self={closeModal}
+		on:keydown|self={closeModal}
 		transition:fly={{ y: -20 }}
 	>
-		<div class="modal-content">
+		<div class="modal-content section-block">
 			<div class="modal-header">
 				<h3>{title}</h3>
 				<Icon class="close-button" src={Xmark} alt="close-icon" onClick={closeModal} />
@@ -52,10 +52,6 @@
 		width: 100%;
 		max-width: 500px;
 		margin-top: 100px;
-		background-color: var(--imdb-grey);
-		border: 1px solid var(--imdb-light-grey);
-		border-radius: 0.25em;
-		padding: 1em;
 		box-sizing: border-box;
 		position: relative;
 	}

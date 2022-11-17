@@ -5,7 +5,7 @@
 	import Clues from '$lib/components/Clues.svelte';
 	import Answers from '$lib/components/Answers.svelte';
 	import TitleSelector from '$lib/components/TitleSelector.svelte';
-	import Modal from '$lib/components/modal/Modal.svelte';
+	import SummaryModal from '$lib/components/modal/SummaryModal.svelte';
 
 	export let data: PageData;
 	let titleSelector: TitleSelector;
@@ -26,22 +26,24 @@
 			},
 			body: JSON.stringify({
 				imdb_id: $gameState.question.imdb_id,
-				answer
+				answer,
+				currentGuessIndex: $gameState.currentGuessIndex
 			})
 		});
 		if (res.ok) {
 			const result = await res.json();
 			$gameState.guesses[$gameState.currentGuessIndex] = {
 				isCorrect: result.isCorrect,
-				answer: result.answer
+				answer: answer
 			};
 			if (result.isCorrect) {
-				$gameState.status = 'SUCCESS';
+				$gameState.status = 'WIN';
 			}
 			$gameState.currentGuessIndex += 1;
 			if ($gameState.currentGuessIndex === $gameState.guesses.length) {
-				$gameState.status = 'FAILURE';
+				$gameState.status = 'FAIL';
 			}
+			$gameState.answer = result.answer;
 		} else {
 			throw new Error('Something went wrong');
 		}
@@ -64,7 +66,8 @@
 	disabled={$gameState.status !== 'IN_PROGRESS'}
 />
 
-<Modal
-	title={$gameState.status}
-	shown={$gameState.status === 'SUCCESS' || $gameState.status === 'FAILURE'}
+<SummaryModal
+	status={$gameState.status}
+	question={$gameState.question}
+	answer={$gameState.answer}
 />
