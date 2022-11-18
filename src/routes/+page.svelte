@@ -6,19 +6,17 @@
 	import Answers from '$lib/components/Answers.svelte';
 	import TitleSelector from '$lib/components/TitleSelector.svelte';
 	import SummaryModal from '$lib/components/modal/SummaryModal.svelte';
+	import Alert from '$lib/components/Alert.svelte';
 
 	export let data: PageData;
 	let titleSelector: TitleSelector;
+	let alertComponent: Alert;
 
 	const isValidAnswer = (answer: string) => {
 		return data.titles.some((title) => title.toLowerCase() === answer.toLowerCase());
 	};
 
 	const submitAnswer = async (answer: string) => {
-		if (!isValidAnswer(answer)) {
-			alert('Invalid answer');
-			return;
-		}
 		const res = await fetch('api/validate-answer', {
 			method: 'POST',
 			headers: {
@@ -60,6 +58,10 @@
 	titles={data.titles}
 	bind:this={titleSelector}
 	onSubmit={(title) => {
+		if (!isValidAnswer(title)) {
+			alertComponent.show('Movie title not in db');
+			return;
+		}
 		submitAnswer(title);
 		titleSelector.clearInput();
 	}}
@@ -71,3 +73,5 @@
 	question={$gameState.question}
 	answer={$gameState.answer}
 />
+
+<Alert bind:this={alertComponent} />
