@@ -8,8 +8,8 @@
 </script>
 
 <Modal
-	title={status == 'WIN' ? 'Good guess!' : 'Too bad!'}
-	shown={status == 'WIN' || status == 'FAIL'}
+	title={status === 'WIN' ? 'Good guess!' : 'Too bad!'}
+	shown={status === 'WIN' || status === 'FAIL'}
 >
 	<div class="section-block">
 		<p>

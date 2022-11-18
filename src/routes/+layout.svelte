@@ -4,7 +4,6 @@
 	import RulesModal from '$lib/components/modal/RulesModal.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import arrowRotate from '$lib/icons/arrow-rotate.svg';
-	import { browser } from '$app/environment';
 
 	const loadNewQuestion = async () => {
 		const res = await fetch('api/question', {
