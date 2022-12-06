@@ -5,6 +5,8 @@ IMDBle is a simple game based on the IMDb list of the 1000 best movies of all ti
 ## Installation
 ```bash
 $ yarn install
+$ npx prisma db push
+$ npx prisma db seed
 ```
 
 ## Usage

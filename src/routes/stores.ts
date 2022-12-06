@@ -50,7 +50,7 @@ const INITIAL_STATE: GameState = {
 }
 
 const createGameStateStore = (): GameStateStore => {
-  let gameState = writable(localGameState || INITIAL_STATE);
+  const gameState = writable(localGameState || INITIAL_STATE);
 
   gameState.subscribe((value) => {
     if (browser) {

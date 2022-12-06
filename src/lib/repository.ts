@@ -9,9 +9,14 @@ export const updateMovieData = async () => {
     if (data !== undefined) {
       for (const movie of data) {
         const { title, imdb_id, plot, year, director, actor } = movie
-        await prisma.movie.create({
-          data: { title, imdb_id, plot, year, director, actor, }
-        })
+        try {
+          await prisma.movie.create({
+            data: { title, imdb_id, plot, year, director, actor, }
+          })
+        } catch (err) {
+          console.error('Error creating movie data entry in db:', err)
+          throw err
+        }
       }
     } else {
       throw new Error('No data returned from scrapeMovieData.')
