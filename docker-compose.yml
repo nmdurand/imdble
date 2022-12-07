@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  db:
+    image: keinos/sqlite3:latest
+    stdin_open: true
+    tty: true
+    restart: always
+    volumes:
+      - ~/.config/imdble/:/root/db/
+  node:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: file:/db/imdble.db
+    ports:
+      - 3000:3000
+    volumes:
+      - ~/.config/imdble/:/db/
