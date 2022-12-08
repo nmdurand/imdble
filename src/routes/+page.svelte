@@ -4,12 +4,12 @@
 	import Plot from '$lib/components/Plot.svelte';
 	import Clues from '$lib/components/Clues.svelte';
 	import Answers from '$lib/components/Answers.svelte';
-	import TitleSelector from '$lib/components/TitleSelector.svelte';
+	import ComboBox from '$lib/components/ComboBox.svelte';
 	import SummaryModal from '$lib/components/modal/SummaryModal.svelte';
 	import Alert from '$lib/components/Alert.svelte';
 
 	export let data: PageData;
-	let titleSelector: TitleSelector;
+	let comboBox: ComboBox;
 	let alertComponent: Alert;
 
 	const isValidAnswer = (answer: string) => {
@@ -54,16 +54,17 @@
 
 <Answers guesses={$gameState.guesses} />
 
-<TitleSelector
-	titles={data.titles}
-	bind:this={titleSelector}
+<ComboBox
+	dataList={data.titles}
+	placeholder={'Type Movie Title'}
+	bind:this={comboBox}
 	onSubmit={(title) => {
 		if (!isValidAnswer(title)) {
 			alertComponent.show('Movie title not in db');
 			return;
 		}
 		submitAnswer(title);
-		titleSelector.clearInput();
+		comboBox.clearInput();
 	}}
 	disabled={$gameState.status !== 'IN_PROGRESS'}
 />

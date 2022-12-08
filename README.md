@@ -14,6 +14,13 @@ $ npx prisma db seed
 
 ## Development
 
+Run the project locally:
 ```bash
 $ yarn run dev
+```
+
+Or run it in a container (requires Docker and Docker Compose).
+With Docker running:
+```bash
+$ docker compose up --build
 ```

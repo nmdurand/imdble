@@ -1,68 +1,64 @@
 <script lang="ts">
-	import Title from './TitleOption.svelte';
+	import ComboBoxOption from './ComboBoxOption.svelte';
 
 	export let disabled: boolean = false;
-	export let titles: string[];
+	export let dataList: string[];
+	export let placeholder: string = 'Start typing...';
 
-	let filteredTitles: string[] = [];
+	let filteredDataList: string[] = [];
 
-	const filterTitles = () => {
-		let storageArr: string[] = [];
-		let count = 0;
-		if (inputValue) {
-			titles.forEach((title) => {
-				count++;
-				if (title.toLowerCase().includes(inputValue.toLowerCase())) {
-					storageArr = [...storageArr, title];
-				}
-			});
+	const filterDataList = () => {
+		if (inputValue.length < 2) {
+			filteredDataList = [];
+		} else {
+			filteredDataList = dataList.filter((option) =>
+				option.toLowerCase().includes(inputValue.toLowerCase())
+			);
 		}
-		filteredTitles = storageArr;
 	};
 
 	/* HANDLING THE INPUT */
-	let searchInput: HTMLInputElement; // use with bind:this to focus element
 	let inputValue = '';
+	let textInput: HTMLInputElement;
 
 	$: {
 		if (!inputValue) {
-			filteredTitles = [];
+			filteredDataList = [];
 		}
 		// whenever inputValue changes, reset hiliting
 		hiLiteIndex = null;
 	}
 
-	export const clearInput = () => {
-		inputValue = '';
-		searchInput.focus();
-	};
-
-	const setInputVal = (title: string) => {
-		inputValue = title;
-		filteredTitles = [];
+	const setInputVal = (option: string) => {
+		inputValue = option;
+		filteredDataList = [];
 		hiLiteIndex = null;
-		(document.querySelector('#title-input') as HTMLInputElement).focus();
+		textInput.focus();
 	};
 
-	export let onSubmit: (title: string) => void;
+	export const clearInput = () => {
+		setInputVal('');
+	};
 
-	/* NAVIGATING OVER THE LIST OF COUNTRIES W HIGHLIGHTING */
+	export let onSubmit: (value: string) => void;
+
+	/* NAVIGATING OVER THE LIST W HIGHLIGHTING */
 	let hiLiteIndex: number | null = null;
 
 	const navigateList = (e: KeyboardEvent) => {
 		switch (e.key) {
 			case 'ArrowDown':
 				e.preventDefault();
-				if (hiLiteIndex === null || hiLiteIndex === filteredTitles.length - 1) {
+				if (hiLiteIndex === null || hiLiteIndex === filteredDataList.length - 1) {
 					hiLiteIndex = 0;
-				} else if (hiLiteIndex < filteredTitles.length - 1) {
+				} else if (hiLiteIndex < filteredDataList.length - 1) {
 					hiLiteIndex += 1;
 				}
 				break;
 			case 'ArrowUp':
 				e.preventDefault();
 				if (hiLiteIndex === null || hiLiteIndex === 0) {
-					hiLiteIndex = filteredTitles.length - 1;
+					hiLiteIndex = filteredDataList.length - 1;
 				} else if (hiLiteIndex > 0) {
 					hiLiteIndex -= 1;
 				}
@@ -70,7 +66,7 @@
 			case 'Enter':
 				if (hiLiteIndex !== null) {
 					e.preventDefault();
-					setInputVal(filteredTitles[hiLiteIndex]);
+					setInputVal(filteredDataList[hiLiteIndex]);
 				}
 				break;
 		}
@@ -79,35 +75,33 @@
 
 <svelte:window on:keydown={navigateList} />
 
-<form id="title-selector" autocomplete="off" on:submit|preventDefault={() => onSubmit(inputValue)}>
+<form id="combobox" autocomplete="off" on:submit|preventDefault={() => onSubmit(inputValue)}>
 	<input
-		id="title-input"
 		type="text"
-		placeholder="Type Movie Title"
+		{placeholder}
 		{disabled}
-		bind:this={searchInput}
 		bind:value={inputValue}
-		on:input={filterTitles}
+		bind:this={textInput}
+		on:input={filterDataList}
 	/>
 
-	<!-- FILTERED LIST OF MOVIE TITLES -->
-	{#if filteredTitles.length > 0}
-		<ul id="autocomplete-items-list">
-			{#each filteredTitles as title, i}
-				<Title
-					itemLabel={title}
+	<input type="submit" value="Guess" {disabled} />
+
+	{#if filteredDataList.length > 0}
+		<ul id="combobox-options-list">
+			{#each filteredDataList as option, i}
+				<ComboBoxOption
+					label={option}
 					highlighted={i === hiLiteIndex}
-					on:click={() => setInputVal(title)}
+					on:click={() => setInputVal(option)}
 				/>
 			{/each}
 		</ul>
 	{/if}
-
-	<input type="submit" value="Guess" {disabled} />
 </form>
 
 <style>
-	#title-selector {
+	#combobox {
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
@@ -139,7 +133,7 @@
 		cursor: default;
 	}
 
-	#autocomplete-items-list {
+	#combobox-options-list {
 		position: absolute;
 		width: calc(100% - 2px);
 		top: calc(1em + 22px);

@@ -3,13 +3,14 @@
 
 	let message: string = '';
 	let hidden = true;
+	export let timeout = 2000;
 
 	export const show = (str: string) => {
 		message = str;
 		hidden = false;
 		setTimeout(() => {
 			hidden = true;
-		}, 2000);
+		}, timeout);
 	};
 </script>
 
