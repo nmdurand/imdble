@@ -75,7 +75,12 @@
 
 <svelte:window on:keydown={navigateList} />
 
-<form id="combobox" autocomplete="off" on:submit|preventDefault={() => onSubmit(inputValue)}>
+<form
+	id="combobox"
+	data-testid="combobox"
+	autocomplete="off"
+	on:submit|preventDefault={() => onSubmit(inputValue)}
+>
 	<input
 		type="text"
 		{placeholder}
