@@ -1,0 +1,18 @@
+FROM node:18-slim
+
+RUN apt-get update
+RUN apt-get install -y openssl
+
+WORKDIR /app
+
+COPY ["package.json", "yarn.lock", "./"]
+RUN yarn install --frozen-lockfile
+COPY . .
+
+RUN yarn run generate:db
+
+EXPOSE 5173
+# vite hmr port:
+EXPOSE 24678
+
+CMD ["yarn", "run", "start:dev"]

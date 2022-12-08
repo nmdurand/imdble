@@ -19,6 +19,11 @@ Run the project locally:
 $ yarn run dev
 ```
 
+Or build the dev image and run it in a Docker container (with hmr - requires Docker and Docker Compose).
+```bash
+$ docker-compose -f docker-compose.dev.yml up --build
+```
+
 ## Production
 
 Build the image and run it in a Docker container (requires Docker and Docker Compose).

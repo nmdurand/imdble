@@ -13,7 +13,10 @@
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
     "format": "prettier --plugin-search-dir . --write .",
     "prismastudio": "npx prisma studio",
-    "start": "npx prisma db push && npx prisma db seed & node ./build"
+    "seed:db": "npx prisma db seed",
+    "generate:db": "npx prisma generate",
+    "start": "yarn run seed:db & node ./build",
+    "start:dev": "yarn run seed:db & vite dev --host 0.0.0.0"
   },
   "prisma": {
     "seed": "ts-node-esm prisma/seed.ts"

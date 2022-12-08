@@ -9,8 +9,9 @@ COPY ["package.json", "yarn.lock", "./"]
 RUN yarn install --frozen-lockfile
 COPY . .
 
+RUN yarn run generate:db
 RUN yarn run build
 
 EXPOSE 3000
 
-CMD ["yarn", "run", "start"]
+CMD ["yarn", "start"]

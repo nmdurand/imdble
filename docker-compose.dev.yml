@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  node-dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    stdin_open: true
+    tty: true
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: file:/db/imdble.db
+    ports:
+      - 5173:5173
+      - 24678:24678
+    volumes:
+      - ~/.config/imdble/:/db/
+      - ./:/app/
+      - /app/node_modules
