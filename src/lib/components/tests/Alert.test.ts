@@ -5,13 +5,18 @@ import Alert from '../Alert.svelte'
 
 const { getByTestId, queryByTestId } = screen
 
-test('renders ok', async () => {
-    const { component } = render(Alert)
-    expect(component.show).toBeDefined();
+test("doesn't show when simply rendered", async () => {
+    render(Alert)
+    expect(queryByTestId('alert')).toBeNull()
+})
 
+test("shows & hides automatically when show method invoked", async () => {
+    const { component } = render(Alert)
     expect(queryByTestId('alert')).toBeNull()
 
-    // Show alert component
+    expect(component.show).toBeDefined();
+
+    // Invoke show method
     component.show('YOLO')
     await waitFor(() => {
         expect(getByTestId('alert')).toBeInTheDocument()
