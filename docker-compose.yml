@@ -1,13 +1,6 @@
 version: '3.4'
 
 services:
-  db:
-    image: keinos/sqlite3:latest
-    stdin_open: true
-    tty: true
-    restart: always
-    volumes:
-      - ~/.config/imdble/:/root/db/
   node:
     build:
       context: .

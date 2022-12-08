@@ -19,9 +19,9 @@ Run the project locally:
 $ yarn run dev
 ```
 
-## Deployment
+## Production
 
-Run the project in a Docker container (requires Docker and Docker Compose).
+Build the image and run it in a Docker container (requires Docker and Docker Compose).
 With Docker running:
 ```bash
 $ docker compose up --build
