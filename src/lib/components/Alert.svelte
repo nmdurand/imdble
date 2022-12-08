@@ -15,7 +15,12 @@
 
 {#if !hidden}
 	<div class="alert-container">
-		<div class="alert" class:hidden transition:fly={{ x: 0, y: -20, duration: 300 }}>
+		<div
+			class="alert"
+			class:hidden
+			data-testid="alert"
+			transition:fly={{ x: 0, y: -20, duration: 300 }}
+		>
 			<b>{message}</b>
 		</div>
 	</div>
